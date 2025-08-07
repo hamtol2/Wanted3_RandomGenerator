@@ -6,16 +6,18 @@ void RandomGenerator(const char* filename, int drawCount = 5);
 
 int main(int argc, char* argv[])
 {
-	if (argc == 0)
+	const char* filename = "Text/PresentationList.txt";
+	int drawCount = 5;
+
+#if !_DEBUG
+	if (argc == 1)
 	{
-		std::cout << "추첨할 파일 이름을 넣어주세요.\n";
-		std::cout << "usage1: RandomGenerator.exe filename\n";
-		std::cout << "usage2: RandomGenerator.exe filename drawCount\n";
+		std::cout << "프로그램 사용 방법은 아래를 참고해주세요.\n";
+		std::cout << "사용법1: RandomGenerator.exe 파일이름\n";
+		std::cout << "사용법2: RandomGenerator.exe 파일이름 추첨횟수\n";
 		return -1;
 	}
-
-	const char* filename = "PresentationList.txt";
-	int drawCount = 5;
+	
 	if (argc == 2)
 	{
 		filename = argv[1];
@@ -25,19 +27,15 @@ int main(int argc, char* argv[])
 		filename = argv[1];
 		drawCount = atoi(argv[2]);
 	}
+#endif
 
 	RandomGenerator(filename, drawCount);
 }
 
 void RandomGenerator(const char* filename, int drawCount)
 {
-	std::cout << filename << ", " << drawCount << "\n";
-
-	char finalPath[MAX_PATH] = {};
-	sprintf_s(finalPath, MAX_PATH - 1, "../TextList/%s", filename);
-
 	FILE* file = nullptr;
-	fopen_s(&file, finalPath, "rt");
+	fopen_s(&file, filename, "rt");
 	if (file == nullptr)
 	{
 		__debugbreak();
