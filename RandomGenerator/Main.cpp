@@ -1,6 +1,9 @@
 #include <iostream>
 #include <Windows.h>
 #include <vector>
+#include <time.h>
+
+#define Test 0
 
 void RandomGenerator(const char* filename, int drawCount = 5);
 
@@ -29,7 +32,18 @@ int main(int argc, char* argv[])
 	}
 #endif
 
+	// 랜덤 시드 적용.
+	srand((int)time(nullptr));
+
+#if Test
+	for (int ix = 0; ix < 10000; ++ix)
+	{
+		RandomGenerator(filename, drawCount);
+		Sleep(100);
+	}
+#else
 	RandomGenerator(filename, drawCount);
+#endif
 }
 
 void RandomGenerator(const char* filename, int drawCount)
@@ -94,8 +108,6 @@ void RandomGenerator(const char* filename, int drawCount)
 		tempVector.emplace_back(ix);
 	}
 
-	srand((int)time(nullptr));
-
 	// drawCount만큼 무작위 추첨 시작.
 	for (int count = 0; count < drawCount; ++count)
 	{
@@ -104,7 +116,7 @@ void RandomGenerator(const char* filename, int drawCount)
 		for (int ix = 0; ix < arrayCount; ++ix)
 		{
 			// 0-23 인덱스를 하나씩 뽑으면서 랜덤 진행.
-			int diff = ((int)tempVector.size() - 1);
+			int diff = ((int)tempVector.size());
 			int index = (diff * rand()) / (RAND_MAX + 1);
 			reserveVector.emplace_back(tempVector[index]);
 
