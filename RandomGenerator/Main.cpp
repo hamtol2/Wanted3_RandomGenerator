@@ -100,7 +100,8 @@ void RandomGenerator(const char* filename, int drawCount)
 	for (int count = 0; count < drawCount; ++count)
 	{
 		// 0-23번 번호를 가진 배열로 시작.
-		for (int ix = 0; (int)tempVector.size(); ++ix)
+		int arrayCount = (int)tempVector.size();
+		for (int ix = 0; ix < arrayCount; ++ix)
 		{
 			// 0-23 인덱스를 하나씩 뽑으면서 랜덤 진행.
 			int diff = ((int)tempVector.size() - 1);
